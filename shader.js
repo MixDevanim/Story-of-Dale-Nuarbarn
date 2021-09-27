@@ -32,3 +32,8 @@ function Shader(vertCode, fragCode){
 Shader.prototype.use = function(){
 	gl.useProgram(this.shaderProgram);
 }
+
+Shader.prototype.uniformMat3 = function(name, matrix){
+    var matrixLocation = gl.getUniformLocation(this.shaderProgram, name);
+    gl.uniformMatrix3fv(matrixLocation, false, matrix);
+}

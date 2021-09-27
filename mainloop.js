@@ -1,6 +1,3 @@
-var canvas = document.getElementById('glcanvas');
-var gl = canvas.getContext('experimental-webgl', { alpha: false })
-
 function main() {
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
@@ -8,7 +5,13 @@ function main() {
 
 	shader.use();
 	var timer = 0.0;
+    let ar = Window.height / Window.width
+    var scaling = mat3.scaling(ar, 1.0);
+    
 	function onTick() {
+        let matrix = mat3.translation(Math.sin(timer), 0.0);
+        matrix = mat3.multiply(scaling, matrix);
+        shader.uniformMat3("u_matrix", matrix);
 		timer += 0.016;
 		// draw everything
 		//texture.reload(noise_rgb(16, 0.05, 0.2), 16,16);
@@ -20,7 +23,7 @@ function main() {
 		gl.viewport(0,0, canvas.width, canvas.height);
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
 		//batch.rect(-0.2,-0.2, 1.1,1.1, 1,1,1,1);
-		batch.circle(0,0,1,32, timer * 0.5, 1,1,1,1, 0,0,0,0);
+		batch.circle(0,0,1,8, 0.0, 1,1,1,1, 0,0,0,0);
 		batch.flush(shader.shaderProgram);
 		gl.flush();
 	}

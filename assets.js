@@ -16,10 +16,13 @@ var vertCode = `
 
 	varying vec4 v_color;
 	varying vec2 v_texCoord;
+    
+    uniform mat3 u_matrix;
+    
 	void main(void) {
 		v_color = color;
 		v_texCoord = texCoord;
-		gl_Position = vec4(coords, 0.0, 1.0);
+		gl_Position = vec4(u_matrix * vec3(coords, 1.0), 1.0);
 	}`;
 	
 var fragCode = `
