@@ -95,6 +95,7 @@ function main() {
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
 	var texture = new Texture(from_1bit(8,8, tex_data), 8,8, gl.RGBA);
+	texture.load_from('grass.png');
 	var camera = new Camera(new vec3(0,0,1));
 
 	var timer = 0.0;
