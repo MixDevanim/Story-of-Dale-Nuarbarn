@@ -2,7 +2,7 @@ function Shader(vertCode, fragCode){
 	var vertShader = gl.createShader(gl.VERTEX_SHADER);
 	gl.shaderSource(vertShader, vertCode);
 	gl.compileShader(vertShader);
-
+	
 	var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
 	gl.shaderSource(fragShader, fragCode);
 	gl.compileShader(fragShader);
@@ -21,19 +21,25 @@ function Shader(vertCode, fragCode){
 		alert("An error occurred compiling fragment shader: " + gl.getShaderInfoLog(fragShader));
 		return;
 	}
-	
-	if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-		alert("Unable to initialize the shader program.");
-		return;
-	}
-	this.shaderProgram = shaderProgram;
+	this.glprogram = shaderProgram;
 }
 
 Shader.prototype.use = function(){
-	gl.useProgram(this.shaderProgram);
+	gl.useProgram(this.glprogram);
+}
+
+Shader.prototype.uniform1f = function(name, value){
+	gl.uniform1f(gl.getUniformLocation(this.glprogram, name), value);
+}
+
+Shader.prototype.uniform3f = function(name, x,y,z){
+	gl.uniform3f(gl.getUniformLocation(this.glprogram, name), x,y,z);
+}
+
+Shader.prototype.uniformMat4 = function(name, matrix){
+	gl.uniformMatrix4fv(gl.getUniformLocation(this.glprogram, name), false, matrix);
 }
 
 Shader.prototype.uniformMat3 = function(name, matrix){
-    var matrixLocation = gl.getUniformLocation(this.shaderProgram, name);
-    gl.uniformMatrix3fv(matrixLocation, false, matrix);
+    gl.uniformMatrix3fv(gl.getUniformLocation(this.glprogram, name), false, matrix);
 }
