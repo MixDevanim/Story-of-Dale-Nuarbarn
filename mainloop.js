@@ -1,10 +1,12 @@
 var Core = {
     frameID: 0,
+    version: '0.0.1',
 };
 
 function main() {
     Window.setup(canvas);
     Window.printDevInfo()
+    console.log("VERSION: "+Core.version);
 	
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
@@ -41,9 +43,9 @@ function main() {
             
             maxDelta = 1e-5;
         }
-	console.log("fps: "+(1.0/maxDelta).toFixed(2));
+        console.log(""+(1.0/maxDelta).toFixed(2));
 		
-	var matrix = camera.getProj(Window.width, Window.height);
+		var matrix = camera.getProj(Window.width, Window.height);
         var view = camera.getView();
 		
 		shader.use();
