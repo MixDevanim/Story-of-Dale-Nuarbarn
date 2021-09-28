@@ -39,11 +39,9 @@ function main() {
             fpsTimer = 0.0;
             
             fpsElement.textContent = ""+(1.0/maxDelta).toFixed(2);
-            console.log(""+(1.0/maxDelta).toFixed(2));
             
             maxDelta = 1e-5;
         }
-        console.log(""+(1.0/maxDelta).toFixed(2));
 		
 		var matrix = camera.getProj(Window.width, Window.height);
         var view = camera.getView();
