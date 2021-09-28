@@ -58,8 +58,8 @@ function handleKeyRelease(e){
 
 function handleMouseMove(e){
     var rect = canvas.getBoundingClientRect();
-	let mx = e.clientX - rect.left
-	let my = e.clientY - rect.top;
+	let mx = e.offsetX;
+	let my = e.offsetY;
 	if (Core.frameID > 10){
 		Events.dx += e.movementX;
 		Events.dy += e.movementY;

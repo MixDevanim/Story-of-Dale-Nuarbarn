@@ -67,8 +67,16 @@ var mat3 = {
 
 var mat4 = {
 
-  projection: function(width, height, depth) {
+  projection: function(width, height, depth, flipped) {
     // Note: This matrix flips the Y axis so 0 is at the top.
+    if (flipped)
+    return mat4.multiply(mat4.scaling(1,-1,1), [
+       2 / width, 0, 0, 0,
+       0, -2 / height, 0, 0,
+       0, 0, 2 / depth, 0,
+      -1, 1, 0, 1,
+    ]); 
+    else
     return [
        2 / width, 0, 0, 0,
        0, -2 / height, 0, 0,

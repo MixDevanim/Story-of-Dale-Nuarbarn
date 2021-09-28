@@ -8,7 +8,7 @@ var Window = {
     setup: function(canvas){
         canvas.addEventListener('keydown', handleKeyPress);
         canvas.addEventListener('keyup', handleKeyRelease);
-        canvas.addEventListener('mousemove', handleMouseMove);
+        canvas.addEventListener('mousemove', handleMouseMove, {passive: true, capture: true});
         canvas.addEventListener('click', handleMouseClick);
         canvas.focus();
     },

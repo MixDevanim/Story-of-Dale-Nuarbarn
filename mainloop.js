@@ -10,44 +10,27 @@ function main() {
 	
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
-	var texture = new Texture(noise_rgb(8,8, 1.0, 1.0), 8,8, gl.RGBA);
-	texture.load_from('grass.png');
-	var camera = new Camera(new vec3(0,0,1));
-
-    var maxDelta = 1e-5;
-	var timer = 0.0;
-    var fpsTimer = 0.0;
-    var dt = 0.0;
+	var texture = new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+	//texture.load_from('grass.png');
+	var camera = new Camera(new vec3(0,0,0));
+    camera.fov = Window.height*0.5;
+    camera.centred = false;
+    //camera.flipped = true;
     let ar = Window.height / Window.width
     
     camera.update();
-    
-    const fpsElement = document.querySelector("#fps");
-    
 	function onTick(now) {
+        const fpsElement = document.querySelector("#fps");
 		Core.frameID++;
-	 	camera.controls(timer, 0.016);
+        Time.update(now, fpsElement);
+	 	camera.controls(Time.time, 0.016);
 		camera.update();
-        
-        dt = now * 0.001 - timer;
-        timer = now * 0.001;
-        fpsTimer += dt;
-        if (dt > maxDelta)
-            maxDelta = dt;
-        
-        if (fpsTimer > 0.25){
-            fpsTimer = 0.0;
-            
-            fpsElement.textContent = ""+(1.0/maxDelta).toFixed(2);
-            
-            maxDelta = 1e-5;
-        }
 		
-		var matrix = camera.getProj(Window.width, Window.height);
+		var matrix = camera.getProj();
         var view = camera.getView();
 		
 		shader.use();
-		shader.uniform1f("u_timer", timer);
+		shader.uniform1f("u_timer", Time.time);
 		shader.uniformMat4("u_proj", matrix);
 		shader.uniformMat4("u_view", view);
 		shader.uniformMat4("u_model", mat4.translation(0,0,0));
@@ -58,7 +41,7 @@ function main() {
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		gl.viewport(0,0, canvas.width, canvas.height);
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
-		batch.circle(0,0,1,4, timer*0.1, 1,1,1,1, 1,1,1,0);
+		batch.circle(Events.mx,Events.my,5,8, Time.time*0.1, 1,1,1,1, 1,1,1,0);
 		batch.flush(shader);
 		gl.flush();
 		

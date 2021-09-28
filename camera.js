@@ -6,6 +6,9 @@ function Camera(coords){
 	this.rdir = new vec3(0.0, 0.0, -1.0);
 	this.right = new vec3(1.0, 0.0, 0.0);
 	this.zoom = 1.0;
+    this.centred = false;
+    this.fov = 1.0;
+    this.flipped = false;
 }
 
 Camera.prototype.controls = function(timer, dt){
@@ -90,14 +93,22 @@ Camera.prototype.update = function(){
 	this.right.z = -Math.cos(this.yrotation + 3.141592 * 0.5);
 }
 
-Camera.prototype.getProj = function(width, height){
-    return mat4.perspective(1.8*this.zoom, width/height, 0.01,1000.0);
+Camera.prototype.getProj = function(perspective){
+    if (perspective){
+        return mat4.perspective(1.8*this.zoom, Window.width/Window.height, 0.01,1000.0);
+    } else {
+        return mat4.projection(this.fov*(Window.width/Window.height)*2, this.fov*2, 10.0, this.flipped);
+    }
 }
 
 Camera.prototype.getView = function(){
     var view = mat4.translation(0,0,0);
     view = mat4.xRotate(view, this.xrotation);
     view = mat4.yRotate(view, this.yrotation);
-    view = mat4.translate(view, -this.coords.x, -this.coords.y, -this.coords.z);
+    if (this.centred){
+        view = mat4.translate(view, -this.coords.x+this.fov*(Window.width/Window.height), -this.coords.y+this.fov, -this.coords.z);
+    } else {
+        view = mat4.translate(view, -this.coords.x, -this.coords.y, -this.coords.z);
+    }
     return view;
 }
