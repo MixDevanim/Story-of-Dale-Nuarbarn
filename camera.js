@@ -9,6 +9,7 @@ function Camera(coords){
     this.centred = false;
     this.fov = 1.0;
     this.flipped = false;
+    this.up = new vec3(0,1,0);
 }
 
 Camera.prototype.controls = function(timer, dt){
@@ -38,15 +39,16 @@ Camera.prototype.controls = function(timer, dt){
 		let factor = speed * 0.05;
 	}
 	
+    let up = this.up;
 	if (Events.down) {
-		coords.x -= front.x*0.016*speed;
-		coords.y -= front.y*0.016*speed;
-		coords.z -= front.z*0.016*speed;
+		coords.x -= up.x*0.016*speed;
+		coords.y -= up.y*0.016*speed;
+		coords.z -= up.z*0.016*speed;
 	}
 	if (Events.up){
-		coords.x += front.x*0.016*speed;
-		coords.y += front.y*0.016*speed;
-		coords.z += front.z*0.016*speed;
+		coords.x += up.x*0.016*speed;
+		coords.y += up.y*0.016*speed;
+		coords.z += up.z*0.016*speed;
 	}
 	if (Events.left){
 		coords.x -= this.right.x*0.016*speed;
@@ -111,4 +113,9 @@ Camera.prototype.getView = function(){
         view = mat4.translate(view, -this.coords.x, -this.coords.y, -this.coords.z);
     }
     return view;
+}
+
+Camera.prototype.setupShader = function(shader, perspective){
+    shader.uniformMat4("u_proj", this.getProj(perspective));
+    shader.uniformMat4("u_view", this.getView());
 }

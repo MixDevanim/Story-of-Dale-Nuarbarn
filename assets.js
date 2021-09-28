@@ -1,14 +1,3 @@
-var tex_data = [
-	1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,
-	1,1,0,1,1,1,1,1,
-	1,1,0,1,1,1,1,1,
-	1,1,0,0,0,0,1,1,
-	1,1,1,1,0,1,1,1,
-	1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,
-];
-
 var vertCode = `
 attribute vec3 coords;
 attribute vec2 texCoord;
@@ -28,12 +17,13 @@ void main(void) {
 }`;
 	
 var fragCode = `
-varying mediump vec4 v_color;
-varying mediump vec2 v_texCoord;
-varying mediump float v_fog;
+precision highp float;
+varying vec4 v_color;
+varying vec2 v_texCoord;
+varying float v_fog;
 
 uniform sampler2D u_texture0;
-uniform mediump float u_timer;
+uniform float u_timer;
 
 void main(void) {
 	gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);

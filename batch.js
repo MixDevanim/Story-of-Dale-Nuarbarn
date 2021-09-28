@@ -1,8 +1,10 @@
-function Batch(capacity){
+function Batch(capacity, shader){
 	this.glbuffer = gl.createBuffer();
 	this.buffer = new Float32Array(capacity);
 	this.capacity = capacity;
 	this.size = 0;
+    this.flippedTextures = false;
+    this.shader = shader;
 
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.glbuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, this.buffer, gl.STATIC_DRAW, 0, 0);
@@ -22,6 +24,8 @@ Batch.prototype.vertex = function (x,y,z,u,v,r,g,b,a) {
 }
 
 Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
+    if (this.size + 100 >= this.capacity)
+        this.flush(this.shader)
 	this.buffer[this.size++] = x;
 	this.buffer[this.size++] = y;
 	this.buffer[this.size++] = 0;
@@ -86,14 +90,15 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 Batch.prototype.circle = function (x,y,r,segments, offset, cr,cg,cb,ca, rr,rg,rb,ra){
 	let psin = 0.0;
 	let pcos = 0.0;
+    let flip = (this.flippedTextures ? 1 : -1);
 	for (let i = 0; i <= segments; i++){
 		let angle = (i / segments + offset) * Math.PI*2.0;
 		let sin = Math.sin(angle);
 		let cos = Math.cos(angle);
 		if (i != 0){
 			this.vertex(x,y,0, 0.5,0.5, cr,cg,cb,ca);
-			this.vertex(x+psin*r, y+pcos*r, 0, (1.0+psin)*0.5, (1.0-pcos)*0.5, rr,rg,rb,ra);
-			this.vertex(x+sin*r, y+cos*r, 0, (1.0+sin)*0.5, (1.0-cos)*0.5, rr,rg,rb,ra);
+			this.vertex(x+psin*r, y+pcos*r, 0, (1.0+psin)*0.5, (1.0+pcos*flip)*0.5, rr,rg,rb,ra);
+			this.vertex(x+sin*r, y+cos*r, 0, (1.0+sin)*0.5, (1.0+cos*flip)*0.5, rr,rg,rb,ra);
 		}
 		psin = sin;
 		pcos = cos;

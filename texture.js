@@ -32,7 +32,7 @@ Texture.prototype.bind = function(){
 	gl.bindTexture(gl.TEXTURE_2D, this.gltexture);
 }
 
-Texture.prototype.load_from = function(url){
+Texture.prototype.loadFile = function(url){
 	const texture = this;
 	const image = new Image();
 	image.onload = function() {
