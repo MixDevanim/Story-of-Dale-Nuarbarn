@@ -10,7 +10,7 @@ function main() {
 	
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
-	var texture = new Texture(from_1bit(8,8, tex_data), 8,8, gl.RGBA);
+	var texture = new Texture(noise_rgb(8,8, 1.0, 1.0), 8,8, gl.RGBA);
 	texture.load_from('grass.png');
 	var camera = new Camera(new vec3(0,0,1));
 
@@ -58,7 +58,7 @@ function main() {
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		gl.viewport(0,0, canvas.width, canvas.height);
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
-		batch.circle(0,0,1,8, 0.0, 1,1,1,1, 0,0,0,0);
+		batch.circle(0,0,1,4, timer*0.1, 1,1,1,1, 1,1,1,0);
 		batch.flush(shader);
 		gl.flush();
 		
