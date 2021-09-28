@@ -1,12 +1,12 @@
 var Core = {
     frameID: 0,
-    version: '0.0.1',
+    version: '0.0.2',
 };
 
 function main() {
     Window.setup(canvas);
     Window.printDevInfo()
-    console.log("VERSION: "+Core.version);
+    console.log("version: "+Core.version);
 	
 	var batch = new Batch(4096);
 	var shader = new Shader(vertCode, fragCode);
