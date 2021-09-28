@@ -26,7 +26,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 0;
-	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = 1;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -36,7 +36,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y+h;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 0;
-	this.buffer[this.size++] = 1;
+	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -46,7 +46,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y+h;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 1;
-	this.buffer[this.size++] = 1;
+	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -56,7 +56,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 0;
-	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = 1;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -66,7 +66,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y+h;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 1;
-	this.buffer[this.size++] = 1;
+	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -76,7 +76,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = y;
 	this.buffer[this.size++] = 0;
 	this.buffer[this.size++] = 1;
-	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = 1;
 	this.buffer[this.size++] = r;
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
@@ -92,8 +92,8 @@ Batch.prototype.circle = function (x,y,r,segments, offset, cr,cg,cb,ca, rr,rg,rb
 		let cos = Math.cos(angle);
 		if (i != 0){
 			this.vertex(x,y,0, 0.5,0.5, cr,cg,cb,ca);
-			this.vertex(x+psin*r, y+pcos*r, 0, (1.0+psin)*0.5, (1.0+pcos)*0.5, rr,rg,rb,ra);
-			this.vertex(x+sin*r, y+cos*r, 0, (1.0+sin)*0.5, (1.0+cos)*0.5, rr,rg,rb,ra);
+			this.vertex(x+psin*r, y+pcos*r, 0, (1.0+psin)*0.5, (1.0-pcos)*0.5, rr,rg,rb,ra);
+			this.vertex(x+sin*r, y+cos*r, 0, (1.0+sin)*0.5, (1.0-cos)*0.5, rr,rg,rb,ra);
 		}
 		psin = sin;
 		pcos = cos;
