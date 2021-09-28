@@ -41,8 +41,9 @@ function main() {
             
             maxDelta = 1e-5;
         }
+	console.log("fps: "+(1.0/maxDelta).toFixed(2));
 		
-		var matrix = camera.getProj(Window.width, Window.height);
+	var matrix = camera.getProj(Window.width, Window.height);
         var view = camera.getView();
 		
 		shader.use();
