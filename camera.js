@@ -8,11 +8,10 @@ function Camera(coords){
 	this.zoom = 1.0;
 }
 
-var walkTimer = 0.0;
 Camera.prototype.controls = function(timer, dt){
 	let speed = 20.0;
 	let zoom = 1.0;
-	if (this.body && events.shift){
+	if (this.body && Events.shift){
 		speed *= 1.5;
 	}
 	let coords = this.coords;
@@ -26,48 +25,47 @@ Camera.prototype.controls = function(timer, dt){
 	}
 	
 	if (this.body)
-	if (events.down || events.up || events.left || events.right){
+	if (Events.down || Events.up || Events.left || Events.right){
 		coords.x = 0.0;
 		coords.z = 0.0;
-		if (events.shift)
+		if (Events.shift)
 			zoom = 1.2;
 		else
 			zoom = 1.05;
 		let factor = speed * 0.05;
-		walkTimer += dt*factor;
 	}
 	
-	if (events.down) {
+	if (Events.down) {
 		coords.x -= front.x*0.016*speed;
 		coords.y -= front.y*0.016*speed;
 		coords.z -= front.z*0.016*speed;
 	}
-	if (events.up){
+	if (Events.up){
 		coords.x += front.x*0.016*speed;
 		coords.y += front.y*0.016*speed;
 		coords.z += front.z*0.016*speed;
 	}
-	if (events.left){
+	if (Events.left){
 		coords.x -= this.right.x*0.016*speed;
 		coords.z -= this.right.z*0.016*speed;
 	}
-	if (events.right){
+	if (Events.right){
 		coords.x += this.right.x*0.016*speed;
 		coords.z += this.right.z*0.016*speed;
 	}
-	if (events.space) {
+	if (Events.space) {
 		if (this.body){
 			this.body.vel.y = 6.0;
 		} else {
 			coords.y += 0.016*speed;
 		}
 	}
-	if (!this.body && events.shift)
+	if (!this.body && Events.shift)
 		coords.y -= 0.016*speed;
 	
-	if (events.locked){
-		this.yrotation += events.dx * 0.005;
-		this.xrotation += events.dy * 0.005;
+	if (Events.locked){
+		this.yrotation += Events.dx * 0.005;
+		this.xrotation += Events.dy * 0.005;
 		this.xrotation = Math.min(Math.max(this.xrotation, -3.141592*0.49), 3.141592*0.49);
 	}
 	dt *= 5.0;
@@ -90,4 +88,16 @@ Camera.prototype.update = function(){
 	
 	this.right.x = Math.sin(this.yrotation + 3.141592 * 0.5);
 	this.right.z = -Math.cos(this.yrotation + 3.141592 * 0.5);
+}
+
+Camera.prototype.getProj = function(width, height){
+    return mat4.perspective(1.8*this.zoom, width/height, 0.01,1000.0);
+}
+
+Camera.prototype.getView = function(){
+    var view = mat4.translation(0,0,0);
+    view = mat4.xRotate(view, this.xrotation);
+    view = mat4.yRotate(view, this.yrotation);
+    view = mat4.translate(view, -this.coords.x, -this.coords.y, -this.coords.z);
+    return view;
 }

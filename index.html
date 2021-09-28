@@ -10,6 +10,7 @@ html, body {
 	margin: 0 !important;
 	padding: 0 !important;
 	background-color: #111111;
+    color: #FFFFFF;
 }
 canvas {
     image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
@@ -36,6 +37,7 @@ canvas {
     <body>
         <canvas tabindex="1" width = "800" height = "500" id = "glcanvas"></canvas>
         <script src="maths.js"></script>
+        <script src="events.js"></script>
         <script src="display.js"></script>
         <script src="camera.js"></script>
         <script src="assets.js"></script>
@@ -44,5 +46,6 @@ canvas {
         <script src="texgen.js"></script>
         <script src="batch.js"></script>
         <script src="mainloop.js"></script>
+        <div>fps: <span id="fps"></span></div>
     </body>
 </html>
