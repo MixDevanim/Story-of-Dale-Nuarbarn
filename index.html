@@ -5,7 +5,6 @@
         <meta charset="utf-8"/>
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <style>
-        
 html, body {
 	overflow: hidden;
 	margin: 0 !important;
@@ -13,14 +12,14 @@ html, body {
 	background-color: #111111;
     color: #FFFFFF;
 }
-canvas {
-    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
-    image-rendering: -moz-crisp-edges;          /* Firefox                        */
-    image-rendering: -o-crisp-edges;            /* Opera                          */
-    image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
-    image-rendering: pixelated; /* Chrome */
-    image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
-    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+#glcanvas {
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: pixelated;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
 }
 canvas {
     padding: 0;
@@ -37,16 +36,18 @@ canvas {
     </head>
     <body>
         <canvas tabindex="1" width = "800" height = "500" id = "glcanvas"></canvas>
-        <script src="maths.js"></script>
-        <script src="time.js"></script>
-        <script src="events.js"></script>
-        <script src="display.js"></script>
-        <script src="camera.js"></script>
-        <script src="assets.js"></script>
-        <script src="shader.js"></script>
-        <script src="texture.js"></script>
-        <script src="texgen.js"></script>
-        <script src="batch.js"></script>
+		<script src="core/noise.js"></script>
+        <script src="core/maths.js"></script>
+        <script src="core/time.js"></script>
+        <script src="core/events.js"></script>
+        <script src="core/display.js"></script>
+        <script src="core/camera.js"></script>
+        <script src="core/shader.js"></script>
+        <script src="core/texture.js"></script>
+        <script src="core/texgen.js"></script>
+        <script src="core/batch.js"></script>
+		<script src="tile.js"></script>
+		<script src="assets.js"></script>
         <script src="mainloop.js"></script>
         <div>fps: <span id="fps"></span></div>
     </body>

@@ -27,4 +27,9 @@ uniform float u_timer;
 
 void main(void) {
 	gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
+	//gl_FragColor.rg = v_texCoord;
 }`;
+
+function create_blank_texture(){
+	return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+}
