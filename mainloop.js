@@ -4,13 +4,18 @@ var Core = {
 };
 
 var tiles = [];
-var map_width = 64;
-var map_height = 64;
+var map_width = 512;
+var map_height = 512;
 
 for (let y = 0; y < map_width; y++){
 	for (let x = 0; x < map_height; x++){
-		if (noise.simplex2(x*0.05,y*0.05) > 0.1)
+		n = noise.simplex2(x*0.025,y*0.025);
+		if (n > 0.1)
 			tiles.push(3);
+		else if (n > 0.0)
+			tiles.push(5);
+		else if (n > -0.1)
+			tiles.push(4);
 		//else if (Math.random() > 0.2)
 		//	tiles.push(4);
 		else
@@ -71,16 +76,21 @@ function main() {
 			camera.setupShader(shader, false);
 			
 			let sz = 1.0/16.0;
-			for (let id = 0; id < 10; id++){
+			for (let id = 0; id < 5; id++){
 				for (let x = 0; x < map_width; x++){
 					for (let y = 0; y < map_height; y++){
+						let yy = map_height - y - 1
+						if (x < camera.coords.x-16 || x > camera.coords.x+16)
+							continue
+						if (yy < camera.coords.y-9 || yy > camera.coords.y+8)
+							continue
 						let index = main_atlas[tiles[y*map_width+x].texture];
 						if (tiles[y*map_width+x].zindex != id)
 							continue;
 						let u = (index % 16)*sz;
 						let v = Math.floor(index / 16)*sz;
-						batch.rectUV(x,map_height-y-1,1,1, 1,1,1,1, u+0.00005,v+0.00005,u+sz-0.0001,v+sz-0.0001);
-						//if (y > 0 && tiles[(y-1)*map_width+x].zindex < id)
+						batch.rectUV(x,yy,1,1, 1,1,1,1, u+0.00005,v+0.00005,u+sz-0.0001,v+sz-0.0001);
+						if (yy > 0 && tiles[(yy-1)*map_width+x].zindex < id)
 							batch.rectUV(x,map_height-y-1-sz*1.2, 1,sz*1.2, 0,0,0,0.5, u+0.00005,v+0.00005,u+sz-0.0001,v+sz-0.0001);
 						//batch.rectUV(x,y,1,1, 1,1,1,1, 0,0,1,1);
 					}

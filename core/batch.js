@@ -87,6 +87,8 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = a;
 }
 
+
+
 Batch.prototype.rectUV = function (x,y,w,h,r,g,b,a, u1,v1,u2,v2){
     if (this.size + 100 >= this.capacity)
         this.flush(this.shader)
@@ -149,6 +151,76 @@ Batch.prototype.rectUV = function (x,y,w,h,r,g,b,a, u1,v1,u2,v2){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+}
+
+Batch.prototype.rectTile = function (x,y,w,h,
+									u1,v1,u2,v2,
+									r1,g1,b1,a1,
+									r2,g2,b2,a2,
+									r3,g3,b3,a3,
+									r4,g4,b4,a4){
+    if (this.size + 100 >= this.capacity)
+        this.flush(this.shader)
+	this.buffer[this.size++] = x;
+	this.buffer[this.size++] = y;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u1;
+	this.buffer[this.size++] = v2;
+	this.buffer[this.size++] = r1;
+	this.buffer[this.size++] = g1;
+	this.buffer[this.size++] = b1;
+	this.buffer[this.size++] = a1;
+
+	this.buffer[this.size++] = x;
+	this.buffer[this.size++] = y+h;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u1;
+	this.buffer[this.size++] = v1;
+	this.buffer[this.size++] = r2;
+	this.buffer[this.size++] = g2;
+	this.buffer[this.size++] = b2;
+	this.buffer[this.size++] = a2;
+
+	this.buffer[this.size++] = x+w;
+	this.buffer[this.size++] = y+h;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u2;
+	this.buffer[this.size++] = v1;
+	this.buffer[this.size++] = r3;
+	this.buffer[this.size++] = g3;
+	this.buffer[this.size++] = b3;
+	this.buffer[this.size++] = a3;
+
+	this.buffer[this.size++] = x;
+	this.buffer[this.size++] = y;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u1;
+	this.buffer[this.size++] = v2;
+	this.buffer[this.size++] = r1;
+	this.buffer[this.size++] = g1;
+	this.buffer[this.size++] = b1;
+	this.buffer[this.size++] = a1;
+
+
+	this.buffer[this.size++] = x+w;
+	this.buffer[this.size++] = y+h;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u2;
+	this.buffer[this.size++] = v1;
+	this.buffer[this.size++] = r3;
+	this.buffer[this.size++] = g3;
+	this.buffer[this.size++] = b3;
+	this.buffer[this.size++] = a3;
+
+	this.buffer[this.size++] = x+w;
+	this.buffer[this.size++] = y;
+	this.buffer[this.size++] = 0;
+	this.buffer[this.size++] = u2;
+	this.buffer[this.size++] = v2;
+	this.buffer[this.size++] = r4;
+	this.buffer[this.size++] = g4;
+	this.buffer[this.size++] = b4;
+	this.buffer[this.size++] = a4;
 }
 
 Batch.prototype.circle = function (x,y,r,segments, offset, cr,cg,cb,ca, rr,rg,rb,ra){

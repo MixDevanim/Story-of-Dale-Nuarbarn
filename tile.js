@@ -38,12 +38,21 @@ TILE_sand = {
 	zindex: 1,
 };
 
+TILE_grassy_sand = {
+	id: 'grassy_sand',
+	title: 'Grassy Sand',
+	description: 'Sand with some grass on it',
+	texture: 'grassy_sand',
+	zindex: 1,
+};
+
 var TILE_DEFS = [
 	TILE_void,
 	TILE_floor,
 	TILE_wooden_floor,
 	TILE_grass,
 	TILE_sand,
+	TILE_grassy_sand,
 ];
 
 function Tile(def){
@@ -57,4 +66,5 @@ var main_atlas = {
 	'wooden_floor': 2,
 	'grass': 3,
 	'sand':4,
+	'grassy_sand':5,
 };
