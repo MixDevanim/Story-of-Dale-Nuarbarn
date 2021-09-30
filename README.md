@@ -1,7 +1,7 @@
 # Story-of-Dale-Nuarbarn
 <a href=https://mixdevanim.github.io/Story-of-Dale-Nuarbarn/>Play</a>
 
-<h3><b>TODO List:</b></h3>
+TODO:
 - add minimap
 - add layering:
   - ground layer
