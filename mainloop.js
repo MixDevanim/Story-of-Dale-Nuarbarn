@@ -130,7 +130,7 @@ function main() {
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
 		batch.flippedTextures = true;
 		camera.setupShader(shader, false);
-		batch.lines = true;
+		//batch.lines = true;
 
 		// how one tile texture resolution relates to atlas resolution
 		let sz = 1.0/16.0;
