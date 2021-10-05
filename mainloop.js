@@ -87,9 +87,12 @@ function main() {
     console.log("version: "+Core.version);
     
 	var shader = new Shader(vertCode, fragCode);
+	var uiShader = new Shader(uiVertCode, uiFragCode);
 	batch = new Batch(4096, shader);
 	var texture = new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
     texture.loadFile('atlas.png');
+    
+	var blankTexture = new Texture(solid_rgb(8,8, 255,255,255), 8,8, gl.RGB);
     
 	var camera = new Camera(new vec3(10,5,1));
     camera.flipped = true;
@@ -113,9 +116,6 @@ function main() {
 	 	camera.controls(Time.time, 0.016);
 		camera.update();
 		
-		var matrix = camera.getProj();
-        var view = camera.getView();
-		
 		shader.use();
 		shader.uniform1f("u_timer", Time.time);
 		shader.uniformMat4("u_model", mat4.translation(0,0,0));
@@ -127,7 +127,7 @@ function main() {
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.viewport(0,0, canvas.width, canvas.height);
 
-		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
+		texture.bind()
 		batch.flippedTextures = true;
 		camera.setupShader(shader, false);
 		//batch.lines = true;
@@ -165,9 +165,17 @@ function main() {
 				tiles[(map_height-my)*map_width+mx] = TILE_DEFS[1];
 		}
 
-		batch.rect(mx,my,1,1, 1,1,1,0.5);
-		batch.flush(shader);
+		uiShader.use();
+		uiShader.uniform1f("u_timer", Time.time);
+		camera.setupShader(uiShader, false);
+		blankTexture.bind();
 		
+		batch.rect(mx+0.4,my+0.4,0.2,0.2, 0.0,0.0,0.0,0.5);
+		batch.flush(uiShader);
+		
+		uicamera.setupShader(uiShader, false);
+		batch.rect(0,0,50,50, 0.0,0.0,0.0,0.5);
+		batch.flush(uiShader);
 		//uicamera.setupShader(shader);
 		//batch.circle(Events.mx,Events.my,50,8, Time.time*0.1, 1,1,1,1, 0.5,0,0,0);
 		//batch.flush(shader);
