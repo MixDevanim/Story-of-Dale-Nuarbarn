@@ -9,7 +9,8 @@ var map_height = 512;
 
 for (let y = 0; y < map_width; y++){
 	for (let x = 0; x < map_height; x++){
-		n = noise.simplex2(x*0.025,y*0.025)+noise.simplex2(x*0.05,y*0.05)*0.5+noise.simplex2(x*0.1,y*0.1)*0.25;
+		let s = 0.6;
+		n = noise.simplex2(x*0.025*s,y*0.025*s)+noise.simplex2(x*0.05*s,y*0.05*s)*0.5+noise.simplex2(x*0.1*s,y*0.1*s)*0.25;
 		if (n > 0.1)
 			tiles.push(3);
 		else if (n > -0.1)
@@ -92,7 +93,7 @@ function main() {
     
 	var camera = new Camera(new vec3(10,5,1));
     camera.flipped = true;
-    camera.fov = 8;
+    camera.fov = 12;
     camera.centred = true;
     
     var uicamera = new Camera(new vec3(0,0,0));
@@ -118,7 +119,7 @@ function main() {
 		shader.uniform1f("u_timer", Time.time);
 		shader.uniformMat4("u_model", mat4.translation(0,0,0));
 		
-		gl.clearColor(0.2,0.3,0.4,0.9);
+		gl.clearColor(0.7,0.64,0.6,0.9);
 		gl.enable(gl.BLEND);
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 		gl.disable(gl.DEPTH_TEST)

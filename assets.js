@@ -30,7 +30,9 @@ void main(void) {
 	if (texColor.a*v_color.a < 0.3){
 		gl_FragColor = vec4(0.0);
 	} else {
+		float l = v_color.a * 0.5 + 0.5;
 		texColor.a = 1.0;
+		texColor.rgb *= l;
 		gl_FragColor = texColor;
 	}
 }`;
