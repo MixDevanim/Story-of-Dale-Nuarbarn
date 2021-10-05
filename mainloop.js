@@ -130,14 +130,15 @@ function main() {
 		batch.flippedTextures = true;
 		camera.setupShader(shader, false);
 		
+		let ar = Window.width / Window.height;
 		let sz = 1.0/16.0;
 		for (let id = 0; id < 10; id++){
 			for (let x = 0; x < map_width; x++){
 				for (let y = 0; y < map_height; y++){
 					let yy = map_height - y - 1
-					if (x < camera.coords.x-camera.fov*2.2 || x > camera.coords.x+camera.fov*2)
+					if (x < camera.coords.x-camera.fov*ar-3 || x > camera.coords.x+camera.fov*ar+2)
 						continue
-					if (yy < camera.coords.y-camera.fov*1.2 || yy > camera.coords.y+camera.fov*1.2)
+					if (yy < camera.coords.y-camera.fov-3 || yy > camera.coords.y+camera.fov+2)
 						continue
 					draw_tile(x,y, x,y, blend_map, sz, id);
 				}
