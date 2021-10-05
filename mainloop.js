@@ -135,7 +135,7 @@ function main() {
 			for (let x = 0; x < map_width; x++){
 				for (let y = 0; y < map_height; y++){
 					let yy = map_height - y - 1
-					if (x < camera.coords.x-camera.fov*2 || x > camera.coords.x+camera.fov*2)
+					if (x < camera.coords.x-camera.fov*2.2 || x > camera.coords.x+camera.fov*2)
 						continue
 					if (yy < camera.coords.y-camera.fov*1.2 || yy > camera.coords.y+camera.fov*1.2)
 						continue
