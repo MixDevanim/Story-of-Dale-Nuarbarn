@@ -5,6 +5,7 @@ function Batch(capacity, shader){
 	this.size = 0;
     this.flippedTextures = false;
     this.shader = shader;
+	this.lines = false;
 
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.glbuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, this.buffer, gl.STATIC_DRAW, 0, 0);
@@ -26,6 +27,7 @@ Batch.prototype.vertex = function (x,y,z,u,v,r,g,b,a) {
 Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
     if (this.size + 100 >= this.capacity)
         this.flush(this.shader)
+
 	this.buffer[this.size++] = x;
 	this.buffer[this.size++] = y;
 	this.buffer[this.size++] = 0;
@@ -45,6 +47,18 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+	
+	if (this.lines){
+		this.buffer[this.size++] = x;
+		this.buffer[this.size++] = y+h;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = r;
+		this.buffer[this.size++] = g;
+		this.buffer[this.size++] = b;
+		this.buffer[this.size++] = a;
+	}
 
 	this.buffer[this.size++] = x+w;
 	this.buffer[this.size++] = y+h;
@@ -55,6 +69,18 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+	
+	if (this.lines){
+		this.buffer[this.size++] = x+w;
+		this.buffer[this.size++] = y+h;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 1;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = r;
+		this.buffer[this.size++] = g;
+		this.buffer[this.size++] = b;
+		this.buffer[this.size++] = a;
+	}
 
 	this.buffer[this.size++] = x;
 	this.buffer[this.size++] = y;
@@ -65,6 +91,18 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+	
+	if (this.lines){
+		this.buffer[this.size++] = x;
+		this.buffer[this.size++] = y;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 1;
+		this.buffer[this.size++] = r;
+		this.buffer[this.size++] = g;
+		this.buffer[this.size++] = b;
+		this.buffer[this.size++] = a;
+	}
 
 	this.buffer[this.size++] = x+w;
 	this.buffer[this.size++] = y+h;
@@ -75,6 +113,18 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+	
+	if (this.lines){
+		this.buffer[this.size++] = x+w;
+		this.buffer[this.size++] = y+h;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 1;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = r;
+		this.buffer[this.size++] = g;
+		this.buffer[this.size++] = b;
+		this.buffer[this.size++] = a;
+	}
 
 	this.buffer[this.size++] = x+w;
 	this.buffer[this.size++] = y;
@@ -85,6 +135,18 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 	this.buffer[this.size++] = g;
 	this.buffer[this.size++] = b;
 	this.buffer[this.size++] = a;
+	
+	if (this.lines){
+		this.buffer[this.size++] = x;
+		this.buffer[this.size++] = y;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 0;
+		this.buffer[this.size++] = 1;
+		this.buffer[this.size++] = r;
+		this.buffer[this.size++] = g;
+		this.buffer[this.size++] = b;
+		this.buffer[this.size++] = a;
+	}
 }
 
 
@@ -245,19 +307,19 @@ Batch.prototype.flush = function (shaderProgram) {
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.glbuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, this.buffer, gl.STATIC_DRAW, 0, this.size);
 
-	var coord = gl.getAttribLocation(shaderProgram.glprogram, "coords");
+	var coord = gl.getAttribLocation(shaderProgram.glprogram, "a_coords");
 	gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 9*4, 0);
 	gl.enableVertexAttribArray(coord);
 
-	var tex = gl.getAttribLocation(shaderProgram.glprogram, "texCoord");
+	var tex = gl.getAttribLocation(shaderProgram.glprogram, "a_texCoord");
 	gl.vertexAttribPointer(tex, 2, gl.FLOAT, false, 9*4, 3*4);
 	gl.enableVertexAttribArray(tex);
 
-	var color = gl.getAttribLocation(shaderProgram.glprogram, "color");
+	var color = gl.getAttribLocation(shaderProgram.glprogram, "a_color");
 	gl.vertexAttribPointer(color, 4, gl.FLOAT, false, 9*4, 5*4);
 	gl.enableVertexAttribArray(color);
  
-	gl.drawArrays(gl.TRIANGLES, 0, this.size / 9);
+	gl.drawArrays(this.lines ? gl.LINES : gl.TRIANGLES, 0, this.size / 9);
 	gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
 	this.size = 0;	

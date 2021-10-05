@@ -100,8 +100,9 @@ function main() {
     uicamera.fov = Window.height*0.5;
     uicamera.centred = false;
     
-    let ar = Window.height / Window.width
+    let AR = Window.width / Window.height
 	
+	// temp values translated out of loop for better performance
 	let blend_map = [1,1,1,1];
     
     camera.update();
@@ -129,14 +130,16 @@ function main() {
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
 		batch.flippedTextures = true;
 		camera.setupShader(shader, false);
-		
-		let ar = Window.width / Window.height;
+		batch.lines = true;
+
+		// how one tile texture resolution relates to atlas resolution
 		let sz = 1.0/16.0;
 		for (let id = 0; id < 10; id++){
 			for (let x = 0; x < map_width; x++){
 				for (let y = 0; y < map_height; y++){
 					let yy = map_height - y - 1
-					if (x < camera.coords.x-camera.fov*ar-3 || x > camera.coords.x+camera.fov*ar+2)
+					// sort of frustum culling in 2D
+					if (x < camera.coords.x-camera.fov*AR-3 || x > camera.coords.x+camera.fov*AR+2)
 						continue
 					if (yy < camera.coords.y-camera.fov-3 || yy > camera.coords.y+camera.fov+2)
 						continue
@@ -144,6 +147,8 @@ function main() {
 				}
 			}
 		}
+		batch.flush(shader);
+		batch.lines = false
 
 		let mx = (Events.mx / Window.width - 0.5) * 2.0 * (Window.width / Window.height)
 		let my = -(Events.my / Window.height - 0.5) * 2.0
@@ -153,15 +158,11 @@ function main() {
 		mx = Math.floor(mx);
 		my = Math.floor(my);
 		
-		if (Events.lmb){
-			if (mx >= 0 && mx < map_width && my >= 0 && my < map_height){
+		if (mx >= 0 && mx < map_width && my >= 0 && my < map_height){
+			if (Events.lmb)
 				tiles[(map_height-my)*map_width+mx] = TILE_DEFS[4];
-			}
-		}
-		if (Events.rmb){
-			if (mx >= 0 && mx < map_width && my >= 0 && my < map_height){
+			if (Events.rmb)
 				tiles[(map_height-my)*map_width+mx] = TILE_DEFS[1];
-			}
 		}
 
 		batch.rect(mx,my,1,1, 1,1,1,0.5);

@@ -7,4 +7,4 @@ TODO:
   - ground layer
   - floor layer
   - etc..
-- ~~- add tiles blending (for ground layer)~~
+- add tiles blending (for ground layer)
