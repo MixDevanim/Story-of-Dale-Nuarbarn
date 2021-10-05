@@ -15,6 +15,18 @@ function noise_rgb(w,h,colorize,intencity){
 	return data;
 }
 
+function solid_rgb(w,h, r,g,b){
+	var data = new Uint8Array(w*h*3);
+	for (let y = 0; y < h; y++){
+		for (let x = 0; x < w; x++){
+			data[(y*w+x)*3] = r;
+			data[(y*w+x)*3+1] = g;
+			data[(y*w+x)*3+2] = b;
+		}
+	}
+	return data;
+}
+
 function from_1bit(w,h, bits){
 	var data = new Uint8Array(w*h*4);
 	let i = 0;
