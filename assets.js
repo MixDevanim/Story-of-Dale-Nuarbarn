@@ -26,8 +26,13 @@ uniform sampler2D u_texture0;
 uniform float u_timer;
 
 void main(void) {
-	gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
-	//gl_FragColor.rg = v_texCoord;
+	vec4 texColor = texture2D(u_texture0, v_texCoord);
+	if (texColor.a*v_color.a < 0.3){
+		gl_FragColor = vec4(0.0);
+	} else {
+		texColor.a = 1.0;
+		gl_FragColor = texColor;
+	}
 }`;
 
 function create_blank_texture(){

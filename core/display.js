@@ -10,6 +10,7 @@ var Window = {
         canvas.addEventListener('keyup', handleKeyRelease);
         canvas.addEventListener('mousemove', handleMouseMove, {passive: true, capture: true});
         canvas.addEventListener('click', handleMouseClick);
+		canvas.addEventListener('mousedown', handleMouseDown);
         canvas.focus();
     },
     

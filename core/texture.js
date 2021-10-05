@@ -37,7 +37,7 @@ Texture.prototype.loadFile = function(url, onloaded){
 	const image = new Image();
 	image.onload = function() {
 		gl.bindTexture(gl.TEXTURE_2D, texture.gltexture);
-		gl.texImage2D(gl.TEXTURE_2D, 0, texture.format, texture.format, gl.UNSIGNED_BYTE, image);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 		texture.width = image.width;
 		texture.height = image.height;
 		texture.data = new Uint8Array(texture.width * texture.height * 4);

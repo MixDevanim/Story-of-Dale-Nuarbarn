@@ -35,15 +35,15 @@ TILE_sand = {
 	title: 'Sand',
 	description: 'Sand',
 	texture: 'sand',
-	zindex: 1,
+	zindex: 2,
 };
 
-TILE_grassy_sand = {
-	id: 'grassy_sand',
-	title: 'Grassy Sand',
-	description: 'Sand with some grass on it',
-	texture: 'grassy_sand',
-	zindex: 1,
+TILE_stone_path = {
+	id: 'stone_path',
+	title: 'Stone Path',
+	description: 'Stone Path',
+	texture: 'stone_path',
+	zindex: 2,
 };
 
 var TILE_DEFS = [
@@ -52,7 +52,7 @@ var TILE_DEFS = [
 	TILE_wooden_floor,
 	TILE_grass,
 	TILE_sand,
-	TILE_grassy_sand,
+	TILE_stone_path,
 ];
 
 function Tile(def){
@@ -63,8 +63,8 @@ function Tile(def){
 var main_atlas = {
 	'grid': 0,
 	'floor': 1,
-	'wooden_floor': 2,
+	'sand':2,
 	'grass': 3,
-	'sand':4,
-	'grassy_sand':5,
+	'wooden_floor': 4,
+	'stone_path': 5,
 };

@@ -37,6 +37,15 @@ function handleKeyPress(e){
 };
 
 function handleMouseClick(e){
+	console.log(e)
+	if (e.button == 0)
+		Events.lmb = false;
+	if (e.button == 2)
+		Events.rmb = false;
+};
+
+function handleMouseDown(e){
+	console.log(e)
 	if (e.button == 0)
 		Events.lmb = true;
 	if (e.button == 2)
@@ -71,8 +80,8 @@ function handleMouseMove(e){
 Events.pull = function(){
     Events.dx = 0;
     Events.dy = 0;
-    Events.lmb = false;
-    Events.rmb = false;
+    //Events.lmb = false;
+    //Events.rmb = false;
     if (!document.pointerLockElement){
         Events.locked = false;
     } else {
