@@ -98,6 +98,8 @@ function draw_level(camera, shader){
         case 2: flip = -1.0; anim_offset = 16; offset += 1.0; break;
         case 3: flip = -1.0; anim_offset = 0; offset += 1.0; break;
     }
+    if (Math.floor(Core.frameID / 256) % 2 == 0)
+    	anim_offset += 16 * 3;
     batch.sprite(player.coords.x-0.5-1.0/32.0+offset,player.coords.y+0.5-1.0/32.0,1*flip,-1, 1,1,1,1, 128+(Math.floor(Core.frameID/8)%4)+anim_offset)
     batch.flush(shader);
     batch.lines = false;
