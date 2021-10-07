@@ -30,6 +30,11 @@ function handleKeyPress(e){
 	if (e.code == 'KeyT'){
 		canvas.requestPointerLock();
 	}
+	if (e.code == 'Digit0')
+		player.selectedSlot = 10;
+	for (let i = 1; i < 10; i++)
+		if (e.code == 'Digit'+i)
+			player.selectedSlot = i-1;
     Events.keys[e.code] = true;
 	//if (e.code == 'Escape')
 	//	Events.locked = false;
@@ -64,6 +69,15 @@ function handleKeyRelease(e){
 	if (e.code == 'KeyP') Events.rmb = false;
     Events.keys[e.code] = false;
 };
+
+function handleScroll(e){
+	player.selectedSlot -= Math.sign(e.deltaY);
+	if (player.selectedSlot < 0)
+		player.selectedSlot += 10;
+	if (player.selectedSlot >= 10)
+		player.selectedSlot -= 10;
+	console.log(e);
+}
 
 function handleMouseMove(e){
     var rect = canvas.getBoundingClientRect();

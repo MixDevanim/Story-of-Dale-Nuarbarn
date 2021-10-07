@@ -46,7 +46,18 @@ TILE_stone_path = {
 	zindex: 2,
 };
 
-var TILE_DEFS = [
+var ITEMS = [];
+
+var TILE_DEFS = {
+	'void': TILE_void,
+	'floor': TILE_floor,
+	'grass': TILE_grass,
+	'sand': TILE_sand,
+	'stone_path': TILE_stone_path,
+	'wooden_floor': TILE_wooden_floor
+};
+
+var TILE_DEFAS = [
 	TILE_void,
 	TILE_floor,
 	TILE_wooden_floor,

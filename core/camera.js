@@ -78,6 +78,11 @@ Camera.prototype.controls = function(timer, dt){
 	this.zoom = zoom * dt + this.zoom * (1.0-dt);
 }
 
+Camera.prototype.toBounds = function(left, right, bottom, top){
+	this.coords.x = Math.min(right-this.fov*AR, Math.max(left+this.fov*AR, this.coords.x));
+	this.coords.y = Math.min(top-this.fov, Math.max(bottom+this.fov, this.coords.y));
+}
+
 Camera.prototype.update = function(){
 	this.dir.x = Math.sin(this.yrotation);
 	this.dir.z = -Math.cos(this.yrotation);

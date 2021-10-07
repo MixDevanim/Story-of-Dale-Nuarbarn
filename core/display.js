@@ -11,6 +11,7 @@ var Window = {
         canvas.addEventListener('mousemove', handleMouseMove, {passive: true, capture: true});
         canvas.addEventListener('click', handleMouseClick);
 		canvas.addEventListener('mousedown', handleMouseDown);
+		canvas.addEventListener('wheel', handleScroll, false);
         canvas.focus();
     },
     
