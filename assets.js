@@ -142,6 +142,22 @@ void main(void) {
 	gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
 }`;
 
-function create_blank_texture(){
-	return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+//function create_blank_texture(){
+//	return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+//}
+
+var Assets = {
+	blankTexture: null,
+	tilesTexture: null,
+	shader: null,
+	uiShader: null,
+};
+
+function load_assets(){
+	Assets.shader = new Shader(vertCode, fragCode);
+	Assets.uiShader = new Shader(uiVertCode, uiFragCode);
+	Assets.tilesTexture = new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+    Assets.tilesTexture.loadFile('atlas.png');
+    
+	Assets.blankTexture = new Texture(solid_rgb(8,8, 255,255,255), 8,8, gl.RGB);
 }
