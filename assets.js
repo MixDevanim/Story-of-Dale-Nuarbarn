@@ -108,6 +108,7 @@ void main(void) {
 		float l = v_color.a * 0.5 + 0.5;
 		texColor.a = 1.0;
 		texColor.rgb *= l;
+		texColor.rgb *= v_color.rgb;
 		gl_FragColor = texColor;
 	}
 }`;
