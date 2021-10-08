@@ -91,35 +91,35 @@ function draw_level(camera, shader){
     }
     let flip = 1.0
     let anim_offset = 0
-	let offset = 0.0;
-	switch (player.dir){
+    let offset = 0.0;
+    switch (player.dir){
         case 0: anim_offset = 16; break;
         case 1: anim_offset = 32; break;
         case 2: flip = -1.0; anim_offset = 16; offset += 1.0; break;
         case 3: flip = -1.0; anim_offset = 0; offset += 1.0; break;
     }
     if (Math.floor(Core.frameID / 256) % 2 == 0)
-    	anim_offset += 16 * 3;
-    	
+        anim_offset += 16 * 3;
+        
     let frame = 128+(Math.floor(Core.frameID/8)%4)+anim_offset;
 
     draw_outline(player.coords.x-0.5+offset, player.coords.y+0.5, flip, -1, frame);
     batch.sprite(player.coords.x-0.5+offset,player.coords.y+0.5,
-    	1*flip,-1, 1,1,1,1, frame)
+        1*flip,-1, 1,1,1,1, frame)
     batch.flush(shader);
     batch.lines = false;
 }
 
 function draw_outline(x,y, w,h, index){
     let p = 1.0/16.0;
-    	
+        
     batch.sprite(x - p, y - p, w,h, 0,0,0,1, index);
-	batch.sprite(x + p, y - p, w,h, 0,0,0,1, index);
+    batch.sprite(x + p, y - p, w,h, 0,0,0,1, index);
     batch.sprite(x - p, y + p, w,h, 0,0,0,1, index);
-	batch.sprite(x + p, y + p, w,h, 0,0,0,1, index);
+    batch.sprite(x + p, y + p, w,h, 0,0,0,1, index);
     batch.sprite(x - p, y,     w,h, 0,0,0,1, index);
-	batch.sprite(x + p, y,     w,h, 0,0,0,1, index);
-	batch.sprite(x,     y - p, w,h, 0,0,0,1, index);
+    batch.sprite(x + p, y,     w,h, 0,0,0,1, index);
+    batch.sprite(x,     y - p, w,h, 0,0,0,1, index);
 }
 
 function main() {
@@ -146,6 +146,7 @@ function main() {
         const fpsElement = document.querySelector("#fps");
         Core.frameID++;
         Time.update(now, fpsElement);
+        Window.update();
 
         let speed = 2.0;
         if (Events.left){
@@ -154,15 +155,15 @@ function main() {
         }
         if (Events.right){
             player.coords.x += Time.dt * speed;
-        	player.dir = 2;
+            player.dir = 2;
         }
         if (Events.down){
             player.coords.y -= Time.dt * speed;
-        	player.dir = 3;
+            player.dir = 3;
         }
         if (Events.up){
             player.coords.y += Time.dt * speed;
-        	player.dir = 1;
+            player.dir = 1;
         }
 
         camera.coords.x = player.coords.x;

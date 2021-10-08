@@ -152,7 +152,7 @@ Batch.prototype.rect = function (x,y,w,h,r,g,b,a){
 Batch.prototype.sprite = function (x,y, w,h, r,g,b,a, index){
 	let u = (index % 16)/16.0;
 	let v = Math.floor(index / 16)/16.0;
-	this.rectUV(x,y,w,h,r,g,b,a, u,v+1.0/16.0, u+1.0/16.0, v)
+	this.rectUV(x,y,w,h, r,g,b,a, u,v+1.0/16.0, u+1.0/16.0, v)
 }
 
 Batch.prototype.rectUV = function (x,y,w,h,r,g,b,a, u1,v1,u2,v2){

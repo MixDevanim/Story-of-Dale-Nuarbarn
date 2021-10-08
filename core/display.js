@@ -10,8 +10,8 @@ var Window = {
         canvas.addEventListener('keyup', handleKeyRelease);
         canvas.addEventListener('mousemove', handleMouseMove, {passive: true, capture: true});
         canvas.addEventListener('click', handleMouseClick);
-		canvas.addEventListener('mousedown', handleMouseDown);
-		canvas.addEventListener('wheel', handleScroll, false);
+        canvas.addEventListener('mousedown', handleMouseDown);
+        canvas.addEventListener('wheel', handleScroll, false);
         canvas.focus();
     },
     
@@ -34,4 +34,12 @@ var Window = {
         console.log("  vendor:", getUnmaskedInfo(gl).vendor);
         console.log("  renderer:", getUnmaskedInfo(gl).renderer);
     },
+    
+    update: function(){
+        canvas.width  = window.innerWidth - 100;
+          canvas.height = window.innerHeight - 100;
+          Window.width = canvas.width;
+          Window.height = canvas.height;
+          AR = Window.width / Window.height
+    }
 }

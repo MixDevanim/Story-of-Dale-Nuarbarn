@@ -84,13 +84,13 @@ float cnoise(vec3 P){
 }
 
 void main(void) {
-	v_color = a_color;
-	v_texCoord = a_texCoord;
-	vec3 coords = a_coords;
-	//coords.x += cnoise(vec3(coords.xy, u_timer*5.0))*0.1;
-	gl_Position = u_proj * u_view * u_model * vec4(coords, 1.0);
+    v_color = a_color;
+    v_texCoord = a_texCoord;
+    vec3 coords = a_coords;
+    //coords.x += cnoise(vec3(coords.xy, u_timer*5.0))*0.1;
+    gl_Position = u_proj * u_view * u_model * vec4(coords, 1.0);
 }`;
-	
+    
 var fragCode = `
 precision highp float;
 varying vec4 v_color;
@@ -101,16 +101,16 @@ uniform sampler2D u_texture0;
 uniform float u_timer;
 
 void main(void) {
-	vec4 texColor = texture2D(u_texture0, v_texCoord);
-	if (texColor.a*v_color.a < 0.3){
-		gl_FragColor = vec4(0.0);
-	} else {
-		float l = v_color.a * 0.5 + 0.5;
-		texColor.a = 1.0;
-		texColor.rgb *= l;
-		texColor.rgb *= v_color.rgb;
-		gl_FragColor = texColor;
-	}
+    vec4 texColor = texture2D(u_texture0, v_texCoord);
+    if (texColor.a*v_color.a < 0.3){
+        gl_FragColor = vec4(0.0);
+    } else {
+        float l = v_color.a * 0.5 + 0.5;
+        texColor.a = 1.0;
+        texColor.rgb *= l;
+        texColor.rgb *= v_color.rgb;
+        gl_FragColor = texColor;
+    }
 }`;
 
 var uiVertCode = `
@@ -126,11 +126,11 @@ uniform mat4 u_view;
 uniform float u_timer;
 
 void main(void) {
-	v_color = a_color;
-	v_texCoord = a_texCoord;
-	gl_Position = u_proj * u_view * vec4(a_coords, 1.0);
+    v_color = a_color;
+    v_texCoord = a_texCoord;
+    gl_Position = u_proj * u_view * vec4(a_coords, 1.0);
 }`;
-	
+    
 var uiFragCode = `
 precision highp float;
 varying vec4 v_color;
@@ -140,25 +140,25 @@ uniform sampler2D u_texture0;
 uniform float u_timer;
 
 void main(void) {
-	gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
+    gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
 }`;
 
 //function create_blank_texture(){
-//	return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+//    return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
 //}
 
 var Assets = {
-	blankTexture: null,
-	tilesTexture: null,
-	shader: null,
-	uiShader: null,
+    blankTexture: null,
+    tilesTexture: null,
+    shader: null,
+    uiShader: null,
 };
 
 function load_assets(){
-	Assets.shader = new Shader(vertCode, fragCode);
-	Assets.uiShader = new Shader(uiVertCode, uiFragCode);
-	Assets.tilesTexture = new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
+    Assets.shader = new Shader(vertCode, fragCode);
+    Assets.uiShader = new Shader(uiVertCode, uiFragCode);
+    Assets.tilesTexture = new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
     Assets.tilesTexture.loadFile('atlas.png');
     
-	Assets.blankTexture = new Texture(solid_rgb(8,8, 255,255,255), 8,8, gl.RGB);
+    Assets.blankTexture = new Texture(solid_rgb(8,8, 255,255,255), 8,8, gl.RGB);
 }
