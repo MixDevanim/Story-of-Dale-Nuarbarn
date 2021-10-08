@@ -22,11 +22,11 @@ function generate_map(width, height, s){
 	for (let y = 0; y < width; y++){
 		for (let x = 0; x < height; x++){
 			n = noise.simplex2(x*0.025*s,y*0.025*s)+noise.simplex2(x*0.05*s,y*0.05*s)*0.5+noise.simplex2(x*0.1*s,y*0.1*s)*0.25;
-			if (n > 0.1)
+			/*if (n > 0.1)
 				tiles.push('grass');
 			else if (n > -0.1)
 				tiles.push('sand');
-			else
+			else*/
 				tiles.push('void');
 		}
 	}

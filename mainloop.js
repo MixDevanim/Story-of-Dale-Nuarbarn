@@ -100,9 +100,26 @@ function draw_level(camera, shader){
     }
     if (Math.floor(Core.frameID / 256) % 2 == 0)
     	anim_offset += 16 * 3;
-    batch.sprite(player.coords.x-0.5-1.0/32.0+offset,player.coords.y+0.5-1.0/32.0,1*flip,-1, 1,1,1,1, 128+(Math.floor(Core.frameID/8)%4)+anim_offset)
+    	
+    let frame = 128+(Math.floor(Core.frameID/8)%4)+anim_offset;
+
+    draw_outline(player.coords.x-0.5+offset, player.coords.y+0.5, flip, -1, frame);
+    batch.sprite(player.coords.x-0.5+offset,player.coords.y+0.5,
+    	1*flip,-1, 1,1,1,1, frame)
     batch.flush(shader);
     batch.lines = false;
+}
+
+function draw_outline(x,y, w,h, index){
+    let p = 1.0/16.0;
+    	
+    batch.sprite(x - p, y - p, w,h, 0,0,0,1, index);
+	batch.sprite(x + p, y - p, w,h, 0,0,0,1, index);
+    batch.sprite(x - p, y + p, w,h, 0,0,0,1, index);
+	batch.sprite(x + p, y + p, w,h, 0,0,0,1, index);
+    batch.sprite(x - p, y,     w,h, 0,0,0,1, index);
+	batch.sprite(x + p, y,     w,h, 0,0,0,1, index);
+	batch.sprite(x,     y - p, w,h, 0,0,0,1, index);
 }
 
 function main() {
@@ -147,8 +164,7 @@ function main() {
             player.coords.y += Time.dt * speed;
         	player.dir = 1;
         }
-        
-         //camera.controls(Time.time, 0.016);
+
         camera.coords.x = player.coords.x;
         camera.coords.y = player.coords.y;
         camera.toBounds(0.5,current_map.width+0.5, 0.5,current_map.height+0.5);
