@@ -36,8 +36,8 @@ var Window = {
     },
     
     update: function(){
-        let w = window.innerWidth - 100;
-        let h = window.innerHeight - 100;
+        let w = window.innerWidth - 200;
+        let h = window.innerHeight - 200;
         w -= w % 8;
         h -= h % 8;
         if (w != canvas.width && h != canvas.height){

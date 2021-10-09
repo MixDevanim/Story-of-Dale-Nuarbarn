@@ -56,30 +56,8 @@ function draw_ui_layer(mx,my, uicamera, camera, uiShader){
             }
         }
     }
-    let string = 'Тестовый, если можно так сказать, font. блинба: ёжики';
-    let x = 20;
-    for (let i = 0; i < string.length; i++){
-        let glyph = get_glyph(string[i]);
-        if (!glyph){
-            x += 5;
-            continue;
-        }
-        batch.spriteSub(x+1+Math.floor(Math.sin(Time.time)*20),140+1,
-            8,8, 0,0,0,1, glyph);
-        batch.spriteSub(x+Math.floor(Math.sin(Time.time)*20),140,
-            8,8, 1,1,1,1, glyph);
-        let modifier = get_glyph_modifier(string[i]);
-        if (modifier) {
-            batch.spriteSub(x+1+Math.floor(Math.sin(Time.time)*20),140+1-1,
-                8,8, 0,0,0,1, modifier);
-            batch.spriteSub(x+Math.floor(Math.sin(Time.time)*20),140-1,
-                8,8, 1,1,1,1, modifier);
-        }
-        if (!is_glyph_nospace(string[i]))
-            x += 7
-        else
-            x += 2
-    }
+    let string = 'fps: '+(Time.framerateMeasured.toFixed(2));
+    draw_text(string, 10,10);
     batch.flush(uiShader);
 }
 
@@ -181,9 +159,8 @@ function main() {
     camera.update();
     
     function onTick(now) {
-        const fpsElement = document.querySelector("#fps");
         Core.frameID++;
-        Time.update(now, fpsElement);
+        Time.update(now);
         Window.update();
         uicamera.fov = Window.height*0.5*0.5;
 

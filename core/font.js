@@ -156,5 +156,40 @@ var glyphs = {
     'ъ': CYRABCS+13,
     'э': CYRABCS+14,
     'ю': CYRABCS+15,
-    'я': CYRABCS+16
+    'я': CYRABCS+16,
+    '0': CYRABC-6,
+    '1': CYRABC-5,
+    '2': CYRABC-4,
+    '3': CYRABC-3,
+    '4': CYRABC-2,
+    '5': CYRABCS-6,
+    '6': CYRABCS-5,
+    '7': CYRABCS-4,
+    '8': CYRABCS-3,
+    '9': CYRABCS-2,
 };
+
+function draw_text(string, x, y){
+    for (let i = 0; i < string.length; i++){
+        let glyph = get_glyph(string[i]);
+        if (!glyph){
+            x += 5;
+            continue;
+        }
+        batch.spriteSub(x+1,y+1,
+            8,8, 0,0,0,1, glyph);
+        batch.spriteSub(x,y,
+            8,8, 1,1,1,1, glyph);
+        let modifier = get_glyph_modifier(string[i]);
+        if (modifier) {
+            batch.spriteSub(x+1,y+1-1,
+                8,8, 0,0,0,1, modifier);
+            batch.spriteSub(x,y-1,
+                8,8, 1,1,1,1, modifier);
+        }
+        if (!is_glyph_nospace(string[i]))
+            x += 7
+        else
+            x += 2
+    }
+}

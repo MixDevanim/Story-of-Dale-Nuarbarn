@@ -3,8 +3,9 @@ var Time = {
 	time: 0.0,
     fpsTimer: 0.0,
     dt: 0.0,
+    framerateMeasured: 1.0,
     
-    update: function(now, fpsElement){
+    update: function(now){
         this.dt = now * 0.001 - this.time;
         this.time = now * 0.001;
         this.fpsTimer += this.dt;
@@ -14,7 +15,7 @@ var Time = {
         if (this.fpsTimer > 0.25){
             this.fpsTimer = 0.0;
             
-            fpsElement.textContent = ""+(1.0/this.maxDelta).toFixed(2);
+            this.framerateMeasured = 1.0/this.maxDelta;
             
             this.maxDelta = 1e-5;
         }
