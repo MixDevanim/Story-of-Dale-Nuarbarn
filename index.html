@@ -21,6 +21,7 @@ html, body {
 	image-rendering: -webkit-optimize-contrast;
 	image-rendering: pixelated;
 	image-rendering: optimize-contrast;
+	image-rendering: crisp-edges;
 	-ms-interpolation-mode: nearest-neighbor;
 }
 canvas {
@@ -36,7 +37,7 @@ canvas {
 }
     </style>
     </head>
-    <body oncontextmenu="Events.rmb = false; return false;">
+    <body>
         <canvas tabindex="1" width = "1200" height = "600" id = "glcanvas"></canvas>
 		<script src="core/noise.js"></script>
         <script src="core/maths.js"></script>
@@ -48,6 +49,7 @@ canvas {
         <script src="core/texture.js"></script>
         <script src="core/texgen.js"></script>
         <script src="core/batch.js"></script>
+        <script src="core/font.js"></script>
 		<script src="tile.js"></script>
 		<script src="tilesmap.js"></script>
 		<script src="player.js"></script>

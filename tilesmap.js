@@ -22,12 +22,12 @@ function generate_map(width, height, s){
     for (let y = 0; y < width; y++){
         for (let x = 0; x < height; x++){
             n = noise.simplex2(x*0.025*s,y*0.025*s)+noise.simplex2(x*0.05*s,y*0.05*s)*0.5+noise.simplex2(x*0.1*s,y*0.1*s)*0.25;
-            /*if (n > 0.1)
-                tiles.push('grass');
-            else if (n > -0.1)
+            //if (n > 0.1)
+                tiles.push('wooden_floor');
+            /*else if (n > -0.1)
                 tiles.push('sand');
-            else*/
-                tiles.push('void');
+            else
+                tiles.push('void');*/
         }
     }
 
@@ -61,8 +61,7 @@ function draw_tile(x, y, tx,ty, blend_map, sz, index){
     if (x < 0 || y < 0 || x >= current_map.width || y >= current_map.height)
         return;
     let yy = current_map.height - ty - 1;
-    //let index = main_atlas[tiles[y*map_width+x].texture];
-    
+
     get_blending_map(x,y, index, blend_map);
     
     let b0 = blend_map[0];

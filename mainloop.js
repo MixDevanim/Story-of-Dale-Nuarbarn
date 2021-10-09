@@ -30,6 +30,8 @@ function draw_ui_layer(mx,my, uicamera, camera, uiShader){
     uicamera.setupShader(uiShader, false);
     batch.rect(0,0,50,180, 0.0,0.0,0.0,0.7);
     batch.rect(50,0,400,50, 0.0,0.0,0.0,0.7);
+    
+    batch.rect(Window.width/2-1,Window.height/2-1,1,1, 1,0,0,1);
     for (let i = 0; i < 10; i++){
         if (i <= player.health)
             batch.rect(10, 150 - i * 10, 8,8, 1,0.4,0.3,1.0);
@@ -53,6 +55,16 @@ function draw_ui_layer(mx,my, uicamera, camera, uiShader){
                 batch.sprite(50+i*36+cx*6,9+35+cy*6,4,4, 1,1,1,1, main_atlas[TILE_DEFS[item].texture])
             }
         }
+    }
+    let string = 'Assets.tilesTexture.bind';
+    for (let i = 0; i < string.length; i++){
+        let glyph = get_glyph(string[i]);
+        if (!glyph)
+            continue;
+        batch.spriteSub(20+i*8+1+Math.floor(Math.sin(Time.time)*20),40+1,
+            8,8, 0,0,0,1, glyph);
+        batch.spriteSub(20+i*8+Math.floor(Math.sin(Time.time)*20),40,
+            8,8, 1,1,1,1, glyph);
     }
     batch.flush(uiShader);
 }
@@ -101,11 +113,24 @@ function draw_level(camera, shader){
     if (Math.floor(Core.frameID / 256) % 2 == 0)
         anim_offset += 16 * 3;
         
-    let frame = 128+(Math.floor(Core.frameID/8)%4)+anim_offset;
+    let frame = 128+(Math.floor(Time.time*8)%4)+anim_offset;
 
     draw_outline(player.coords.x-0.5+offset, player.coords.y+0.5, flip, -1, frame);
     batch.sprite(player.coords.x-0.5+offset,player.coords.y+0.5,
         1*flip,-1, 1,1,1,1, frame)
+        
+    batch.sprite(12+0.5,7+0.5,
+        1,-1, 1,1,1,1, 16)
+    batch.sprite(12+0.5,7+0.5+0.5,
+        1,-1, 1,1,1,1, 17)
+    batch.sprite(13+0.1,7+0.5,
+        1,-1, 1,1,1,1, 17)
+    batch.sprite(11+0.7,7+0.5,
+        1,-1, 1,1,1,1, 18)
+    batch.sprite(15+0.5,7+0.5,
+        1,-1, 1,1,1,1, 23)
+    batch.sprite(16+0.5,7+0.5,
+        1,-1, 1,1,1,1, 24)
     batch.flush(shader);
     batch.lines = false;
 }
@@ -137,7 +162,6 @@ function main() {
     camera.centred = true;
     
     var uicamera = new Camera(new vec3(0,0,0));
-    uicamera.fov = Window.height*0.5;
     uicamera.centred = false;
     
     camera.update();
@@ -147,6 +171,7 @@ function main() {
         Core.frameID++;
         Time.update(now, fpsElement);
         Window.update();
+        uicamera.fov = Window.height*0.25;
 
         let speed = 2.0;
         if (Events.left){

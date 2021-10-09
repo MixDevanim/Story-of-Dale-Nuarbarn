@@ -109,11 +109,17 @@ void main(void) {
         texColor.a = 1.0;
         texColor.rgb *= l;
         texColor.rgb *= v_color.rgb;
+        float mid = (texColor.r+texColor.g+texColor.b)*0.333;
+        float influence = 0.0;
+        texColor.r = texColor.r * (1.0 - influence) + mid * influence * 0.5;
+        texColor.g = texColor.g * (1.0 - influence) + mid * influence * 0.55;
+        texColor.b = texColor.b * (1.0 - influence) + mid * influence * 0.65;
         gl_FragColor = texColor;
     }
 }`;
 
 var uiVertCode = `
+precision highp float;
 attribute vec3 a_coords;
 attribute vec2 a_texCoord;
 attribute vec4 a_color;
@@ -143,9 +149,7 @@ void main(void) {
     gl_FragColor = v_color * texture2D(u_texture0, v_texCoord);
 }`;
 
-//function create_blank_texture(){
-//    return new Texture(noise_rgb(8,8, 0.0, 0.0), 8,8, gl.RGB);
-//}
+fragCode = uiFragCode;
 
 var Assets = {
     blankTexture: null,

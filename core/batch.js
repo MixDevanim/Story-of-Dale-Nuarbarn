@@ -155,6 +155,12 @@ Batch.prototype.sprite = function (x,y, w,h, r,g,b,a, index){
 	this.rectUV(x,y,w,h, r,g,b,a, u,v+1.0/16.0, u+1.0/16.0, v)
 }
 
+Batch.prototype.spriteSub = function (x,y, w,h, r,g,b,a, index){
+	let u = (index % 32)/32.0;
+	let v = Math.floor(index / 32)/32.0;
+	this.rectUV(x,y,w,h, r,g,b,a, u,v+1.0/32.0, u+1.0/32.0, v)
+}
+
 Batch.prototype.rectUV = function (x,y,w,h,r,g,b,a, u1,v1,u2,v2){
     if (this.size + 100 >= this.capacity)
         this.flush(this.shader)

@@ -36,10 +36,19 @@ var Window = {
     },
     
     update: function(){
-        canvas.width  = window.innerWidth - 100;
-          canvas.height = window.innerHeight - 100;
-          Window.width = canvas.width;
-          Window.height = canvas.height;
-          AR = Window.width / Window.height
+        let w = window.innerWidth - 100;
+        let h = window.innerHeight - 100;
+        w -= w % 8;
+        h -= h % 8;
+        if (w != canvas.width && h != canvas.height){
+            canvas.style.width  = w+'px';
+            canvas.style.height = h+'px';
+            var dpr = window.devicePixelRatio || 1;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            Window.width = canvas.width;
+            Window.height = canvas.height;
+            AR = Window.width / Window.height
+        }
     }
 }
