@@ -1,10 +1,10 @@
 var ABC = 896;
 var COLS = 32;
 var ABCS = ABC + COLS;
-var MODIFIER_0 = ABC+26;
-var MODIFIER_1 = ABC+27;
+var MODIFIER_0 = ABC+25;
+var MODIFIER_1 = ABC+26;
 
-var CYRABC = ABC+COLS*2+16;
+var CYRABC = ABC+COLS*2+15;
 var CYRABCS = CYRABC + COLS;
 
 function get_glyph(char){
@@ -13,6 +13,22 @@ function get_glyph(char){
         return null;
     return g;
 }
+
+function get_glyph_modifier(char){
+    let g = modifiers[char];
+    if (typeof g === 'undefined')
+        return null;
+    return g;
+}
+
+function is_glyph_nospace(char){
+    return ',.:!?;il'.includes(char);
+}
+
+var modifiers = {
+    'ё': MODIFIER_0,
+    'й': MODIFIER_1,
+};
 
 var glyphs = {
     'A': ABC,
@@ -95,7 +111,7 @@ var glyphs = {
     'П': CYRABC+6,
     'Р': ABC+15,
     'С': ABC+2,
-    'Т': ABC+19,
+    'Т': ABC+18,
     'У': ABC+24,
     'Ф': CYRABC+7,
     'Х': ABC+23,
@@ -111,24 +127,24 @@ var glyphs = {
 
     'а': ABCS,
     'б': CYRABCS,
-    'в': ABCS+1,
+    'в': ABCS+31,
     'г': CYRABCS+1,
     'д': CYRABCS+2,
     'е': ABCS+4,
     'ё': ABCS+4,
     'ж': CYRABCS+3,
     'з': CYRABCS+4,
-    'и': ABCS+28,
-    'й': ABCS+28,
+    'и': ABCS+27,
+    'й': ABCS+27,
     'к': ABCS+10,
     'л': CYRABCS+5,
     'м': ABCS+12,
-    'н': ABCS+7,
+    'н': CYRABC-1,
     'о': ABCS+13,
     'п': CYRABCS+6,
     'р': ABCS+14,
     'с': ABCS+2,
-    'т': ABCS+18,
+    'т': ABCS+30,
     'у': ABCS+23,
     'ф': CYRABCS+7,
     'х': ABCS+22,

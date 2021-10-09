@@ -56,15 +56,29 @@ function draw_ui_layer(mx,my, uicamera, camera, uiShader){
             }
         }
     }
-    let string = 'Assets.tilesTexture.bind';
+    let string = 'Тестовый, если можно так сказать, font. блинба: ёжики';
+    let x = 20;
     for (let i = 0; i < string.length; i++){
         let glyph = get_glyph(string[i]);
-        if (!glyph)
+        if (!glyph){
+            x += 5;
             continue;
-        batch.spriteSub(20+i*8+1+Math.floor(Math.sin(Time.time)*20),40+1,
+        }
+        batch.spriteSub(x+1+Math.floor(Math.sin(Time.time)*20),140+1,
             8,8, 0,0,0,1, glyph);
-        batch.spriteSub(20+i*8+Math.floor(Math.sin(Time.time)*20),40,
+        batch.spriteSub(x+Math.floor(Math.sin(Time.time)*20),140,
             8,8, 1,1,1,1, glyph);
+        let modifier = get_glyph_modifier(string[i]);
+        if (modifier) {
+            batch.spriteSub(x+1+Math.floor(Math.sin(Time.time)*20),140+1-1,
+                8,8, 0,0,0,1, modifier);
+            batch.spriteSub(x+Math.floor(Math.sin(Time.time)*20),140-1,
+                8,8, 1,1,1,1, modifier);
+        }
+        if (!is_glyph_nospace(string[i]))
+            x += 7
+        else
+            x += 2
     }
     batch.flush(uiShader);
 }
@@ -171,7 +185,7 @@ function main() {
         Core.frameID++;
         Time.update(now, fpsElement);
         Window.update();
-        uicamera.fov = Window.height*0.25;
+        uicamera.fov = Window.height*0.5*0.5;
 
         let speed = 2.0;
         if (Events.left){
